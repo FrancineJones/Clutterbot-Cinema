@@ -3341,6 +3341,26 @@ renderDetail('event');
 
 // auto-launch tour
 setTimeout(openCoach, 400);
+   
+   const { createClient } = supabase;
+const supabaseUrl = 'https://yeexxhnunhilsezczqzm.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllZXh4aG51bmhpbHNlemN6cXptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzIxNDAsImV4cCI6MjA5NDc0ODE0MH0.GzUlHlrIyhiqX4byVPPktWLH808cQ5oBbf7QmniXuf8';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+   
+async function saveImageUpdate(photoId, newImageUrl) {
+  const { error } = await supabase
+    .from('photos')
+    .update({ imageurl: newImageUrl })
+    .eq('id', photoId);
+
+  if (error) {
+    console.error('Error updating image:', error.message);
+  } else {
+    console.log('Image updated successfully!');
+  }
+}
+   
 </script>
 </body>
 </html>
