@@ -2107,7 +2107,7 @@ function renderDetail(siteId){
   `;
   document.getElementById('detail-content').innerHTML = html;
   document.querySelectorAll('#detail-content figure[data-photo]').forEach(fig=>{
-    fig.addEventListener('click',()=>openLightbox('photos/'+fig.dataset.photo+'_full.jpg'));
+    fig.addEventListener('click',()=>openLightbox('photo-batches/'+fig.dataset.photo+'_full.jpg'));
   });
   document.getElementById('bc-back')?.addEventListener('click',()=>navTo(detailReturnTo.view));
   document.getElementById('bc-back-link')?.addEventListener('click',()=>navTo(detailReturnTo.view));
@@ -2631,7 +2631,7 @@ function renderPhotoLib(){
     </div>`;
   }).join('');
   document.querySelectorAll('.ph-tile').forEach(t=>{
-    t.addEventListener('click',()=>openLightbox('photos/'+t.dataset.photo+'_full.jpg'));
+    t.addEventListener('click',()=>openLightbox('photo-batches/'+t.dataset.photo+'_full.jpg'));
   });
 }
 function wirePhotoFilters(){
@@ -2748,7 +2748,7 @@ function openPhotoChooser(seatId){
   });
   galEl.querySelectorAll('figure[data-photo]').forEach(fig=>{
     fig.addEventListener('click',()=>{
-      seat.cover = 'photos/' + fig.dataset.photo + '_full.jpg';
+      seat.cover = 'photo-batches/' + fig.dataset.photo + '_full.jpg';
       closeGallery(); renderSeatTypes();
     });
   });
