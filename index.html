@@ -1484,7 +1484,7 @@ const SITES = [
     seatTypes:['Bed','Recliner','Standard'],
     crewObserved:3,cleanMin:19,confidence:0.78,photoCount:31,
     note:'Multiplex with seven halls in total. Three theatres entered, three seat types observed — beds, recliners, standard. Curved rows in some halls.',
-    cover:'photos/20260505_203052_full.jpg',
+    cover:'photo-batches/01_event_queensgate/20260505_203052_full.jpg',
     measurements:{
       'Bed length':{v:1800,u:'mm'},
       'Bed width':{v:1440,u:'mm'},
@@ -1522,7 +1522,7 @@ const SITES = [
     seatTypes:['Fabric front','Leather mid','Fold-down side'],
     crewObserved:3,cleanMin:8.2,confidence:0.71,photoCount:43,
     note:'Heritage venue. Three seat materials in one room. Wooden lip and uneven carpet are notable findings.',
-    cover:'photos/embassy_20260507_194458_full.jpg',
+    cover:'photo-batches/02_embassy/embassy_20260507_194458_full.jpg',
     measurements:{
       'Front row gap':{v:380,u:'mm'},
       'Leather row gap (min)':{v:440,u:'mm'},
@@ -1558,7 +1558,7 @@ const SITES = [
     seatTypes:['Standard','Couch'],
     crewObserved:'flex',cleanMin:10,confidence:0.62,photoCount:155,
     note:'Boutique two-hall venue. Smaller hall has 55 seats across 6 rows. Vacuums are not used.',
-    cover:'photos/roxy_20260429_113114_full.jpg',
+    cover:'photo-batches/04_roxy_part1/roxy_20260429_113114_full.jpg',
     measurements:{
       'Std back-to-back':{v:1340,u:'mm'},
       'Std back-to-armrest':{v:520,u:'mm'},
@@ -1636,7 +1636,7 @@ const SITES = [
     seatTypes:['Standard'],
     crewObserved:1,cleanMin:null,confidence:0.55,photoCount:9,
     note:'Friday evening visit. Busy lobby with snack-bar queue. Cleaning was a quick chaotic between-screening turnaround with no recorded time; the late-night reset takes about an hour.',
-    cover:'photos/reading_img_1840_full.jpg',
+    cover:'photo-batches/03_reading_porirua/reading_img_1840_full.jpg',
     measurements:{},
     edgeCases:[]
   }
@@ -2075,7 +2075,7 @@ function renderDetail(siteId){
       <div class="gal-grid">
         ${uniquePhotos.slice(0,12).map(p=>`
           <figure data-photo="${p.f}">
-            <img src="photos/${p.f}_thumb.jpg" alt="${p.cap}" loading="lazy"/>
+            <img src="${photoPath(p.f, '_thumb.jpg')}" alt="${p.cap}" loading="lazy"/>
             <figcaption>${p.cap}</figcaption>
           </figure>`).join('')}
       </div>
@@ -2248,7 +2248,7 @@ function cupHolder(s){
 function renderObjGrid(){
   document.getElementById('obj-grid').innerHTML = OBJECTS.map(o=>{
     const hasPhoto = o.photos && o.photos.length>0;
-    const cover = hasPhoto ? `<img src="photos/${o.photos[0].f}_thumb.jpg" alt="${o.name}" loading="lazy" />` : `<div class="icn">${o.icon}</div>`;
+    const cover = hasPhoto ? `<img src="${photoPath(o.photos[0].f, '_thumb.jpg')}" alt="${o.name}" loading="lazy" />` : `<div class="icn">${o.icon}</div>`;
     return `<div class="obj" data-obj="${o.id}">
       <div class="obj-photo">
         ${cover}
@@ -2320,7 +2320,7 @@ function openObjectGallery(objId){
     ${hasPhotos ? `
       <div class="gal-grid">
         ${o.photos.map(p=>{
-          const src = p.__dataURL ? p.__dataURL : `photos/${p.f}_thumb.jpg`;
+          const src = p.__dataURL ? p.__dataURL : `${photoPath(p.f, '_thumb.jpg')}`;
           return `<figure data-photo="${p.f}" data-src="${src}">
             <img src="${src}" alt="${p.cap}" loading="lazy"/>
             <figcaption>${p.cap}</figcaption>
@@ -2626,7 +2626,7 @@ function renderPhotoLib(){
   grid.innerHTML = filtered.map(p=>{
     const siteName = (SITES.find(s=>s.id===p.site)||{}).short || p.site;
     return `<div class="ph-tile" data-photo="${p.f}">
-      <div class="pp"><img src="photos/${p.f}_thumb.jpg" alt="${p.cap}" loading="lazy"/></div>
+      <div class="pp"><img src="${photoPath(p.f, '_thumb.jpg')}" alt="${p.cap}" loading="lazy"/></div>
       <div class="pc">${p.cap}<span class="src">${siteName} · ${p.cat}</span></div>
     </div>`;
   }).join('');
@@ -2656,28 +2656,28 @@ function wirePhotoFilters(){
 
 /* ============================================================ SEAT TYPES */
 const SEAT_TYPES = [
-  {id:'bed',name:'Bed (V-Max)',site:'Event Queensgate',cover:'photos/20260430_134346_full.jpg',measurements:{
+  {id:'bed',name:'Bed (V-Max)',site:'Event Queensgate',cover:'photo-batches/01_event_queensgate/20260430_134346_full.jpg',measurements:{
     'Length':'1800mm','Width':'1440mm','Seat height':'460mm','Armrest height':'640mm',
   }},
-  {id:'recliner',name:'Recliner',site:'Event Queensgate',cover:'photos/IMG_4306_full.jpg',measurements:{
+  {id:'recliner',name:'Recliner',site:'Event Queensgate',cover:'photo-batches/01_event_queensgate/IMG_4306_full.jpg',measurements:{
     'Row gap (closed)':'750mm','Row gap (open)':'415mm','Seat width':'580mm','Armrest height':'550mm','Cup-holder Ø':'90mm',
   }},
-  {id:'standard-event',name:'Standard',site:'Event Queensgate',cover:'photos/20260430_135144_full.jpg',measurements:{
+  {id:'standard-event',name:'Standard',site:'Event Queensgate',cover:'photo-batches/01_event_queensgate/20260430_135144_full.jpg',measurements:{
     'Row gap':'520mm','Armrest height':'540mm','Under-seat':'700mm','Seat-to-floor':'320mm',
   }},
-  {id:'fabric-front',name:'Fabric front-row',site:'Embassy',cover:'photos/embassy_img_4789_full.jpg',measurements:{
+  {id:'fabric-front',name:'Fabric front-row',site:'Embassy',cover:'photo-batches/02_embassy/embassy_img_4789_full.jpg',measurements:{
     'Row gap':'380mm','Wooden lip H':'70mm','Wooden lip W':'20mm','Lip setback':'90mm','Floor blocked':'620mm',
   }},
-  {id:'leather',name:'Leather mid-section',site:'Embassy',cover:'photos/embassy_img_4792_full.jpg',measurements:{
+  {id:'leather',name:'Leather mid-section',site:'Embassy',cover:'photo-batches/02_embassy/embassy_img_4792_full.jpg',measurements:{
     'Row gap':'440–460mm','Seat height':'400mm','Cushion W':'510mm','Back W':'650mm','Seat-top H':'740mm',
   }},
-  {id:'folddown',name:'Fold-down side',site:'Embassy',cover:'photos/embassy_img_4834_full.jpg',measurements:{
+  {id:'folddown',name:'Fold-down side',site:'Embassy',cover:'photo-batches/02_embassy/embassy_img_4834_full.jpg',measurements:{
     'Folded H':'180mm','In-use H':'280mm','Armrest H':'590mm','Width':'500mm','Total W':'620mm',
   }},
-  {id:'standard-roxy',name:'Standard (Roxy)',site:'Roxy',cover:'photos/roxy_20260429_113631_full.jpg',measurements:{
+  {id:'standard-roxy',name:'Standard (Roxy)',site:'Roxy',cover:'photo-batches/05_roxy_part2/roxy_20260429_113631_full.jpg',measurements:{
     'Back-to-back':'1340mm','Back-to-armrest':'520mm','Seat height':'190mm','Under-seat':'600mm','Cushion W':'500mm',
   }},
-  {id:'couch',name:'Couch',site:'Roxy',cover:'photos/roxy_20260429_113633_full.jpg',measurements:{
+  {id:'couch',name:'Couch',site:'Roxy',cover:'photo-batches/05_roxy_part2/roxy_20260429_113633_full.jpg',measurements:{
     'Row gap':'990mm','Seat height':'170mm','Under-seat':'700mm','Cushion W':'1000mm','Drink rest H':'540mm',
   }},
 ];
@@ -2730,7 +2730,7 @@ function openPhotoChooser(seatId){
     </div>
     <div style="font-size:11px;color:var(--text-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Or select from photo library</div>
     <div class="gal-grid">
-      ${all.map(p=>`<figure data-photo="${p.f}"><img src="photos/${p.f}_thumb.jpg" alt="${p.cap}"/><figcaption>${p.cap}</figcaption></figure>`).join('')}
+      ${all.map(p=>`<figure data-photo="${p.f}"><img src="${photoPath(p.f, '_thumb.jpg')}" alt="${p.cap}"/><figcaption>${p.cap}</figcaption></figure>`).join('')}
     </div>
   `;
   galOverlay.classList.add('open');
@@ -3079,7 +3079,7 @@ function renderSearch(q){
     if(r.objects.length){
       html += `<div class="card" style="margin-bottom:14px"><div class="h"><div><div class="t">Objects (${r.objects.length})</div></div></div>
         <div class="obj-grid">${r.objects.map(o=>{
-          const cover = (o.photos&&o.photos.length)?`<img src="photos/${o.photos[0].f}_thumb.jpg"/>`:`<div class="icn">${o.icon}</div>`;
+          const cover = (o.photos&&o.photos.length)?`<img src="${photoPath(o.photos[0].f, '_thumb.jpg')}"/>`:`<div class="icn">${o.icon}</div>`;
           return `<div class="obj"><div class="obj-photo">${cover}</div><div class="body"><div class="nm">${o.name}</div><div class="ct">${o.note}</div></div></div>`;
         }).join('')}</div></div>`;
     }
